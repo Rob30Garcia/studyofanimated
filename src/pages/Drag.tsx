@@ -5,6 +5,7 @@ import Animated, {
   useAnimatedGestureHandler,
   useSharedValue,
   useAnimatedStyle,
+  withSpring,
 } from 'react-native-reanimated';
 
 const Drag: React.FC = () => {
@@ -20,7 +21,10 @@ const Drag: React.FC = () => {
       posX.value = ctx.posX + event.translationX;
       posY.value = ctx.posY + event.translationY;
     },
-    onEnd: () => {},
+    onEnd: () => {
+      posX.value = withSpring(0);
+      posY.value = withSpring(0);
+    },
   });
 
   const positionStyle = useAnimatedStyle(() => {
