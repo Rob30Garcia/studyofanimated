@@ -5,14 +5,16 @@ import Animated, {
   useAnimatedStyle,
   withTiming,
   Easing,
+  interpolate,
+  Extrapolate,
 } from 'react-native-reanimated';
 
 const App: React.FC = () => {
-  const titlePosition = useSharedValue(30);
+  const titlePosition = useSharedValue(50);
 
   useEffect(() => {
     titlePosition.value = withTiming(0, {
-      duration: 1000,
+      duration: 2000,
       easing: Easing.bounce,
     });
   }, []);
@@ -20,6 +22,12 @@ const App: React.FC = () => {
   const titleStyle = useAnimatedStyle(() => {
     return {
       transform: [{translateY: titlePosition.value}],
+      opacity: interpolate(
+        titlePosition.value,
+        [30, 0],
+        [0, 1],
+        Extrapolate.CLAMP,
+      ),
     };
   });
 
