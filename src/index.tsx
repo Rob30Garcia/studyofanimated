@@ -1,10 +1,30 @@
-import React from 'react';
-import {View, Text, StyleSheet} from 'react-native';
+import React, {useEffect} from 'react';
+import {View, StyleSheet} from 'react-native';
+import Animated, {
+  useSharedValue,
+  useAnimatedStyle,
+} from 'react-native-reanimated';
 
 const App: React.FC = () => {
+  const titlePosition = useSharedValue(30);
+
+  useEffect(() => {
+    setTimeout(() => {
+      titlePosition.value = 0;
+    }, 2000);
+  }, []);
+
+  const titleStyle = useAnimatedStyle(() => {
+    return {
+      transform: [{translateY: titlePosition.value}],
+    };
+  });
+
   return (
     <View style={styles.container}>
-      <Text style={styles.title}>E aí, Robert!</Text>
+      <Animated.Text style={[styles.title, titleStyle]}>
+        E aí, Robert!
+      </Animated.Text>
     </View>
   );
 };
