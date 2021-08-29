@@ -3,15 +3,16 @@ import {View, StyleSheet} from 'react-native';
 import Animated, {
   useSharedValue,
   useAnimatedStyle,
+  withTiming,
 } from 'react-native-reanimated';
 
 const App: React.FC = () => {
   const titlePosition = useSharedValue(30);
 
   useEffect(() => {
-    setTimeout(() => {
-      titlePosition.value = 0;
-    }, 2000);
+    titlePosition.value = withTiming(0, {
+      duration: 1000,
+    });
   }, []);
 
   const titleStyle = useAnimatedStyle(() => {
