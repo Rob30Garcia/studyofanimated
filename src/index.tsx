@@ -9,12 +9,19 @@ import Animated, {
   Extrapolate,
 } from 'react-native-reanimated';
 
+import heroImage from './assets/hero.png';
+
 const App: React.FC = () => {
-  const titlePosition = useSharedValue(50);
+  const titlePosition = useSharedValue(30);
+  const imagePositon = useSharedValue(-30);
 
   useEffect(() => {
+    imagePositon.value = withTiming(0, {
+      duration: 500,
+    });
+
     titlePosition.value = withTiming(0, {
-      duration: 2000,
+      duration: 1000,
       easing: Easing.bounce,
     });
   }, []);
@@ -31,10 +38,17 @@ const App: React.FC = () => {
     };
   });
 
+  const heroStyle = useAnimatedStyle(() => {
+    return {
+      transform: [{translateY: imagePositon.value}],
+    };
+  });
+
   return (
     <View style={styles.container}>
+      <Animated.Image style={[styles.hero, heroStyle]} source={heroImage} />
       <Animated.Text style={[styles.title, titleStyle]}>
-        E aí, Robert!
+        Seja bem-vindo!
       </Animated.Text>
     </View>
   );
@@ -51,6 +65,11 @@ const styles = StyleSheet.create({
     color: '#FFFFFF',
     fontWeight: 'bold',
     fontSize: 24,
+  },
+  hero: {
+    width: 288,
+    height: 200,
+    marginBottom: 40,
   },
 });
 
