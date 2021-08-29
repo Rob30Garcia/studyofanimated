@@ -4,6 +4,7 @@ import Animated, {
   useSharedValue,
   useAnimatedStyle,
   withTiming,
+  Easing,
 } from 'react-native-reanimated';
 
 const App: React.FC = () => {
@@ -12,6 +13,7 @@ const App: React.FC = () => {
   useEffect(() => {
     titlePosition.value = withTiming(0, {
       duration: 1000,
+      easing: Easing.bounce,
     });
   }, []);
 
