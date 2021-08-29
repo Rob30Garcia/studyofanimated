@@ -16,14 +16,18 @@ const App: React.FC = () => {
   const imagePositon = useSharedValue(-30);
 
   useEffect(() => {
-    imagePositon.value = withTiming(0, {
-      duration: 500,
-    });
-
-    titlePosition.value = withTiming(0, {
-      duration: 1000,
-      easing: Easing.bounce,
-    });
+    imagePositon.value = withTiming(
+      0,
+      {
+        duration: 500,
+      },
+      () => {
+        titlePosition.value = withTiming(0, {
+          duration: 1000,
+          easing: Easing.bounce,
+        });
+      },
+    );
   }, []);
 
   const titleStyle = useAnimatedStyle(() => {
